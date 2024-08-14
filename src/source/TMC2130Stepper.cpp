@@ -3,6 +3,8 @@
 
 int8_t TMC2130Stepper::chain_length = 0;
 uint32_t TMC2130Stepper::spi_speed = 16000000/8;
+uint32_t TMC2130Stepper::cs_low_time = 2E9f/float(spi_speed)+50.;
+
 
 TMC2130Stepper::TMC2130Stepper(uint16_t pinCS, float RS, int8_t link) :
   TMCStepper(RS),
@@ -57,6 +59,7 @@ void TMC2130Stepper::defaults() {
 __attribute__((weak))
 void TMC2130Stepper::setSPISpeed(uint32_t speed) {
   spi_speed = speed;
+  cs_low_time = 2E9f/float(spi_speed)+50.;
 }
 
 __attribute__((weak))
@@ -114,6 +117,7 @@ uint32_t TMC2130Stepper::read(uint8_t addressByte) {
   }
 
   switchCSpin(HIGH);
+  delayNanoseconds(cs_low_time);
   switchCSpin(LOW);
 
   // Shift data from target link into the last one...
@@ -134,6 +138,7 @@ uint32_t TMC2130Stepper::read(uint8_t addressByte) {
 
   endTransaction();
   switchCSpin(HIGH);
+  delayNanoseconds(cs_low_time);
   return out;
 }
 
