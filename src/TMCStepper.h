@@ -368,6 +368,7 @@ class TMC2130Stepper : public TMCStepper {
 		struct DRV_STATUS_t { constexpr static uint8_t address = 0X6F; };
 
 		static uint32_t spi_speed; // Default 2MHz
+		static uint32_t cs_low_time;
 		const uint16_t _pinCS;
 		SW_SPIClass * TMC_SW_SPI = nullptr;
 		static constexpr float default_RS = 0.11;
