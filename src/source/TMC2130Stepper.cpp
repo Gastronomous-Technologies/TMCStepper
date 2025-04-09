@@ -298,6 +298,18 @@ bool TMC2130Stepper::maxspeed()       { return ENCM_CTRL_register.maxspeed; }
 // R: LOST_STEPS
 uint32_t TMC2130Stepper::LOST_STEPS() { return read(LOST_STEPS_t::address); }
 
+void TMC2130Stepper::set_mosi_pin(uint8_t pin) {
+  if(TMC_SW_SPI == nullptr){
+    TMC_HW_SPI.setMOSI(pin);
+  }
+}
+
+void TMC2130Stepper::set_miso_pin(uint8_t pin) {
+  if(TMC_SW_SPI == nullptr){
+    TMC_HW_SPI.setMISO(pin);
+  }
+}
+
 void TMC2130Stepper::sg_current_decrease(uint8_t value) {
   switch(value) {
     case 32: sedn(0b00); break;
