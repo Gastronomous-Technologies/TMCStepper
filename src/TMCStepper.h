@@ -343,6 +343,9 @@ class TMC2130Stepper : public TMCStepper {
 
 		uint8_t status_response;
 
+		void set_mosi_pin(uint8_t pin);
+		void set_miso_pin(uint8_t pin);
+
 	protected:
 		void beginTransaction();
 		void endTransaction();
